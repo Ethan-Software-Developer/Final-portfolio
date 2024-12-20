@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Calendar,
   Briefcase,
@@ -13,20 +14,22 @@ import {
   Mail,
   Github,
   Linkedin,
+  Code,
 } from "lucide-react";
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { icon: <Home className="w-5 h-5" />, label: "Home", href: "/" },
+    { icon: <Home className="w-5 h-5" />, label: "Home", to: "/" },
     {
       icon: <FolderOpen className="w-5 h-5" />,
       label: "Projects",
-      href: "/projects",
+      to: "/projects",
     },
-    { icon: <User className="w-5 h-5" />, label: "About", href: "/about" },
-    { icon: <Mail className="w-5 h-5" />, label: "Contact", href: "/contact" },
+    { icon: <Code className="w-5 h-5" />, label: "Services", to: "/services" },
+    { icon: <User className="w-5 h-5" />, label: "About", to: "/about" },
+    { icon: <Mail className="w-5 h-5" />, label: "Contact", to: "/contact" },
   ];
 
   return (
@@ -54,18 +57,22 @@ const MobileNav = () => {
           >
             <div className="flex flex-col items-center justify-center h-full">
               {navItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.label}
-                  href={item.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3 px-6 py-4 text-gray-300 hover:text-purple-400 transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-6 py-4"
                 >
-                  {item.icon}
-                  <span className="text-lg font-medium">{item.label}</span>
-                </motion.a>
+                  <Link
+                    to={item.to}
+                    className="flex items-center gap-3 text-gray-300 hover:text-purple-400 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.icon}
+                    <span className="text-lg font-medium">{item.label}</span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>

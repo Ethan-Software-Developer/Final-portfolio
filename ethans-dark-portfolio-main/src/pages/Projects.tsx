@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   ExternalLink,
   Github,
@@ -24,10 +25,15 @@ const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { icon: <Home className="w-5 h-5" />, label: "Home", href: "#" },
-    { icon: <FolderOpen className="w-5 h-5" />, label: "Projects", href: "#" },
-    { icon: <User className="w-5 h-5" />, label: "About", href: "#" },
-    { icon: <Mail className="w-5 h-5" />, label: "Contact", href: "#" },
+    { icon: <Home className="w-5 h-5" />, label: "Home", to: "/" },
+    {
+      icon: <FolderOpen className="w-5 h-5" />,
+      label: "Projects",
+      to: "/projects",
+    },
+    { icon: <Code className="w-5 h-5" />, label: "Services", to: "/services" },
+    { icon: <User className="w-5 h-5" />, label: "About", to: "/about" },
+    { icon: <Mail className="w-5 h-5" />, label: "Contact", to: "/contact" },
   ];
 
   return (
@@ -54,18 +60,22 @@ const MobileNav = () => {
           >
             <div className="flex flex-col items-center justify-center h-full">
               {navItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.label}
-                  href={item.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3 px-6 py-4 text-gray-300 hover:text-purple-400 transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-6 py-4"
                 >
-                  {item.icon}
-                  <span className="text-lg font-medium">{item.label}</span>
-                </motion.a>
+                  <Link
+                    to={item.to}
+                    className="flex items-center gap-3 text-gray-300 hover:text-purple-400 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.icon}
+                    <span className="text-lg font-medium">{item.label}</span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -80,7 +90,7 @@ const projects = [
     title: "Proxmox Storage Server",
     description:
       "Enterprise-grade storage server implementation using Proxmox VE, featuring ZFS storage pools, automated backup solutions, and high-availability clustering for reliable data management.",
-    image: "public/proxmox.png",
+    image: "/proxmox.png",
     tags: ["Proxmox", "ZFS", "Linux", "Virtualization"],
     category: "Infrastructure",
     links: {
@@ -97,7 +107,7 @@ const projects = [
     title: "Professional Gym Website",
     description:
       "Modern fitness center website with class scheduling, membership management, trainer profiles, and integrated payment processing. Features responsive design and real-time availability updates.",
-    image: "public/Gym.png",
+    image: "/Gym.png",
     tags: ["React", "Node.js", "Stripe", "MongoDB"],
     category: "Web Development",
     links: {
@@ -114,7 +124,7 @@ const projects = [
     title: "AI Tech Blog Platform",
     description:
       "Dynamic blog platform focused on artificial intelligence news, research papers, and industry insights. Features automated content recommendations and interactive code demonstrations.",
-    image: "public/preview.webp",
+    image: "/preview.webp",
     tags: ["Next.js", "AI", "MDX", "TypeScript"],
     category: "Content Platform",
     links: {
@@ -131,7 +141,7 @@ const projects = [
     title: "Data Analytics Dashboard",
     description:
       "Comprehensive data visualization platform with advanced analytics capabilities, custom reporting tools, and predictive modeling features for business intelligence.",
-    image: "public/dashboard.jpeg",
+    image: "/dashboard.jpeg",
     tags: ["Python", "D3.js", "PostgreSQL", "Machine Learning"],
     category: "Data Analytics",
     links: {
@@ -251,7 +261,36 @@ const ProjectCard = ({ project, index }) => {
             y: isHovered ? -5 : 0,
             opacity: isHovered ? 1 : 0.9,
           }}
-        ></motion.div>
+        >
+          {project.links && (
+            <>
+              {project.links.github && (
+                <a
+                  href={project.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
+                >
+                  <Github className="w-5 h-5" />
+                  <span>View Code</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+              {project.links.live && (
+                <a
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
+                >
+                  <ArrowUpRight className="w-5 h-5" />
+                  <span>Live Demo</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+            </>
+          )}
+        </motion.div>
       </div>
     </motion.div>
   );

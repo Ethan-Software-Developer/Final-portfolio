@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Database, Code, Server, Network, Cpu, LineChart, Menu, X, Home, FolderOpen, User, Mail } from "lucide-react";
+import {
+  Database,
+  Code,
+  Server,
+  Network,
+  Cpu,
+  LineChart,
+  Menu,
+  X,
+  Home,
+  FolderOpen,
+  User,
+  Mail,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Mobile Navigation Component
@@ -9,10 +23,15 @@ const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { icon: <Home className="w-5 h-5" />, label: "Home", href: "#" },
-    { icon: <FolderOpen className="w-5 h-5" />, label: "Projects", href: "#" },
-    { icon: <User className="w-5 h-5" />, label: "About", href: "#" },
-    { icon: <Mail className="w-5 h-5" />, label: "Contact", href: "#" },
+    { icon: <Home className="w-5 h-5" />, label: "Home", to: "/" },
+    {
+      icon: <FolderOpen className="w-5 h-5" />,
+      label: "Projects",
+      to: "/projects",
+    },
+    { icon: <Code className="w-5 h-5" />, label: "Services", to: "/services" },
+    { icon: <User className="w-5 h-5" />, label: "About", to: "/about" },
+    { icon: <Mail className="w-5 h-5" />, label: "Contact", to: "/contact" },
   ];
 
   return (
@@ -39,18 +58,22 @@ const MobileNav = () => {
           >
             <div className="flex flex-col items-center justify-center h-full">
               {navItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.label}
-                  href={item.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3 px-6 py-4 text-gray-300 hover:text-purple-400 transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-6 py-4"
                 >
-                  {item.icon}
-                  <span className="text-lg font-medium">{item.label}</span>
-                </motion.a>
+                  <Link
+                    to={item.to}
+                    className="flex items-center gap-3 text-gray-300 hover:text-purple-400 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.icon}
+                    <span className="text-lg font-medium">{item.label}</span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -64,39 +87,45 @@ const services = [
   {
     icon: <Database className="w-8 h-8" />,
     title: "Data Analysis",
-    description: "Expert data analysis using Tableau, SQL, and Python to derive meaningful insights from complex datasets.",
-    skills: ["Tableau", "SQL", "Python", "Data Visualization"]
+    description:
+      "Expert data analysis using Tableau, SQL, and Python to derive meaningful insights from complex datasets.",
+    skills: ["Tableau", "SQL", "Python", "Data Visualization"],
   },
   {
     icon: <Code className="w-8 h-8" />,
     title: "Web Development",
-    description: "Full-stack web development with modern technologies and frameworks for responsive, user-friendly applications.",
-    skills: ["HTML", "CSS", "JavaScript", "React"]
+    description:
+      "Full-stack web development with modern technologies and frameworks for responsive, user-friendly applications.",
+    skills: ["HTML", "CSS", "JavaScript", "React"],
   },
   {
     icon: <Server className="w-8 h-8" />,
     title: "IT Infrastructure",
-    description: "Comprehensive IT infrastructure management and troubleshooting services for optimal system performance.",
-    skills: ["Docker", "Networking", "Windows", "Linux"]
+    description:
+      "Comprehensive IT infrastructure management and troubleshooting services for optimal system performance.",
+    skills: ["Docker", "Networking", "Windows", "Linux"],
   },
   {
     icon: <Network className="w-8 h-8" />,
     title: "System Administration",
-    description: "Professional system administration services ensuring smooth operation of IT infrastructure.",
-    skills: ["Server Management", "Security", "Maintenance"]
+    description:
+      "Professional system administration services ensuring smooth operation of IT infrastructure.",
+    skills: ["Server Management", "Security", "Maintenance"],
   },
   {
     icon: <Cpu className="w-8 h-8" />,
     title: "Hardware Solutions",
-    description: "Expert PC and laptop repair services with comprehensive hardware and software troubleshooting.",
-    skills: ["Hardware Repair", "Diagnostics", "Optimization"]
+    description:
+      "Expert PC and laptop repair services with comprehensive hardware and software troubleshooting.",
+    skills: ["Hardware Repair", "Diagnostics", "Optimization"],
   },
   {
     icon: <LineChart className="w-8 h-8" />,
     title: "AI & Machine Learning",
-    description: "Implementation of AI and machine learning solutions using TensorFlow and modern ML frameworks.",
-    skills: ["TensorFlow", "Deep Learning", "Python", "Data Science"]
-  }
+    description:
+      "Implementation of AI and machine learning solutions using TensorFlow and modern ML frameworks.",
+    skills: ["TensorFlow", "Deep Learning", "Python", "Data Science"],
+  },
 ];
 
 const ServiceCard = ({ service, index }) => {
@@ -114,15 +143,15 @@ const ServiceCard = ({ service, index }) => {
             {service.icon}
           </div>
         </div>
-        
+
         <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-purple-200 transition-colors duration-300">
           {service.title}
         </h3>
-        
+
         <p className="text-gray-400 mb-4 group-hover:text-gray-300 transition-colors duration-300">
           {service.description}
         </p>
-        
+
         <div className="flex flex-wrap gap-2">
           {service.skills.map((skill) => (
             <Badge
@@ -144,28 +173,28 @@ const Services = () => {
     <section className="relative overflow-hidden py-20">
       {/* Mobile Navigation */}
       <MobileNav />
-      
+
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900 to-black" />
-      
+
       <div className="relative container px-4 mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">
             My Services
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Leveraging technology to deliver innovative solutions across data analysis, 
-            web development, and IT infrastructure
+            Leveraging technology to deliver innovative solutions across data
+            analysis, web development, and IT infrastructure
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}
         </div>
       </div>
-      
+
       {/* Decorative blurred circles */}
       <div className="absolute top-40 left-20 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl" />
       <div className="absolute bottom-40 right-20 w-72 h-72 bg-pink-500/30 rounded-full blur-3xl" />
