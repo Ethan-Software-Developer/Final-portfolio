@@ -262,34 +262,7 @@ const ProjectCard = ({ project, index }) => {
             opacity: isHovered ? 1 : 0.9,
           }}
         >
-          {project.links && (
-            <>
-              {project.links.github && (
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
-                >
-                  <Github className="w-5 h-5" />
-                  <span>View Code</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-              {project.links.live && (
-                <a
-                  href={project.links.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
-                >
-                  <ArrowUpRight className="w-5 h-5" />
-                  <span>Live Demo</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-            </>
-          )}
+          {project.links && <></>}
         </motion.div>
       </div>
     </motion.div>
