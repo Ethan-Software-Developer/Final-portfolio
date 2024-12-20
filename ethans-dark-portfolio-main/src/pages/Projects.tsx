@@ -92,7 +92,7 @@ const projects = [
       "Enterprise-grade storage server implementation using Proxmox VE, featuring ZFS storage pools, automated backup solutions, and high-availability clustering for reliable data management.",
     image: "/proxmox.png",
     tags: ["Proxmox", "ZFS", "Linux", "Virtualization"],
-    category: "Infrastructure",
+    category: "DevOps",
     links: {
       github: "https://github.com/username/proxmox-storage",
       live: "https://proxmox-dashboard.com",
@@ -126,7 +126,7 @@ const projects = [
       "Dynamic blog platform focused on artificial intelligence news, research papers, and industry insights. Features automated content recommendations and interactive code demonstrations.",
     image: "/preview.webp",
     tags: ["Next.js", "AI", "MDX", "TypeScript"],
-    category: "Content Platform",
+    category: "AI/ML",
     links: {
       github: "https://github.com/username/ai-blog",
       live: "https://ai-insights-blog.com",
@@ -143,7 +143,7 @@ const projects = [
       "Comprehensive data visualization platform with advanced analytics capabilities, custom reporting tools, and predictive modeling features for business intelligence.",
     image: "/dashboard.jpeg",
     tags: ["Python", "D3.js", "PostgreSQL", "Machine Learning"],
-    category: "Data Analytics",
+    category: "Data",
     links: {
       github: "https://github.com/username/analytics-platform",
       live: "https://data-insights-pro.com",
@@ -161,6 +161,7 @@ const CategoryIcon = ({ category }) => {
     Data: <Database className="w-5 h-5" />,
     "AI/ML": <Code className="w-5 h-5" />,
     DevOps: <Server className="w-5 h-5" />,
+    "Web Development": <Code className="w-5 h-5" />,
   };
   return icons[category] || <Code className="w-5 h-5" />;
 };
@@ -262,7 +263,28 @@ const ProjectCard = ({ project, index }) => {
             opacity: isHovered ? 1 : 0.9,
           }}
         >
-          {project.links && <></>}
+          {project.links.github && (
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
+            >
+              <Github className="w-5 h-5" />
+              <span>View Code</span>
+            </a>
+          )}
+          {project.links.live && (
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors"
+            >
+              <ExternalLink className="w-5 h-5" />
+              <span>Live Demo</span>
+            </a>
+          )}
         </motion.div>
       </div>
     </motion.div>
@@ -286,7 +308,7 @@ const FilterButton = ({ active, children, onClick }) => (
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const categories = ["All", "Data", "AI/ML", "DevOps"];
+  const categories = ["All", "Data", "AI/ML", "DevOps", "Web Development"];
 
   const filteredProjects =
     selectedCategory === "All"
@@ -330,7 +352,7 @@ const Projects = () => {
                     <span>Senior Full Stack Developer at PaySignal</span>
                     <span className="text-sm text-gray-400 flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
-                      September 2023 - Present
+                      September 2024 - Present
                     </span>
                   </div>
                 </div>
